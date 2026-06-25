@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+# Commit the figure and summary table so the README renders on GitHub;
+# ignore only the bulky raw per-run CSV.
+results/metrics_raw.csv

@@ -1,0 +1,36 @@
+# Experiment configuration. Every knob lives here so runs are reproducible.
+seed_count: 20            # number of random seeds per condition
+n_channels: 3             # number of measurement channels
+
+system:
+  mass: 1.0
+  stiffness: 20.0
+  damping: 0.5
+  dt: 0.05                # discretization step (s)
+  n_steps: 400            # time steps per run
+
+input:
+  amplitude: 2.0          # sinusoidal forcing to keep the system excited
+  omega: 4.0              # near the plant's natural frequency, so model error bites
+
+# Process noise (per state) and measurement noise (per channel) standard deviations.
+process_noise_std: 0.01
+measurement_noise_std: [0.05, 0.10, 0.08]   # channels: position, velocity, position+velocity
+
+# Mismatch condition: the FILTER assumes wrong dynamics (the true plant is unchanged).
+mismatch:
+  stiffness_factor: 1.70  # filter stiffness = true stiffness * factor
+  damping_factor: 1.0     # filter damping   = true damping   * factor
+
+# Sensor-bias fault.
+fault:
+  onset_fraction: 0.5     # fault starts halfway through the run
+  bias_sigmas: 6.0        # bias magnitude = bias_sigmas * that channel's noise std
+
+detection:
+  alpha: 0.99             # chi-square quantile for the NIS threshold
+  warmup: 20              # ignore the filter's initial transient (steps)
+
+# Simplified SIF-style estimator (NOT a full SIF/SVSF reproduction).
+sif:
+  boundary_layer_sigmas: 5.0   # delta = factor * that channel's measurement noise std
