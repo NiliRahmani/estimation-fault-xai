@@ -2,6 +2,8 @@
 
 *A small, reproducible research prototype.*
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NiliRahmani/estimation-fault-xai/blob/main/notebooks/run_in_colab.ipynb)
+
 Residual-based fault detection is standard in condition monitoring: a state
 estimator predicts what its sensors should read, and a fault is flagged when the
 normalized innovation squared (NIS) exceeds a chi-square threshold. It is tempting
@@ -146,11 +148,16 @@ directly relevant to building fault-detection and virtual-sensor systems whose
 
 ## Reproduce
 
+Locally:
+
 ```bash
 pip install -r requirements.txt
 python reproduce.py            # writes results/ (raw CSV, summary CSV, figure)
 pytest -q                      # sanity checks on the estimators
 ```
+
+Or run it in the browser with no setup via the **Open in Colab** badge above
+(`notebooks/run_in_colab.ipynb`).
 
 Everything is seeded; re-running reproduces the tables and figure exactly. All
 parameters live in `config.yaml`.
@@ -169,4 +176,5 @@ src/metrics.py       detection rate, false-alarm rate, latency, RMSE, faithfulne
 src/experiment.py    run one trial; sweep conditions × seeds
 src/plotting.py      the single figure
 tests/test_sanity.py estimator sanity checks
+notebooks/run_in_colab.ipynb   one-click browser reproduction (Colab)
 ```
